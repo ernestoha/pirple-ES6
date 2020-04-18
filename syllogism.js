@@ -1,51 +1,55 @@
 /**
-  * Assignment 03 ES06. Syllogism. 
-  */
+ * Assignment 04 ES06. Functions.
+ */
 
 /**
-  * Syllogism 1:
-  *  All men are mortal
-  *  Socrates is a man.
-  *  Therefore, socrates is mortal.
-  */
-function Man(name, food) { 
-    this.name = name;
-    this.food = food; 
+ * Syllogism 1:
+ *  All men are mortal
+ *  Socrates is a man.
+ *  Therefore, socrates is mortal.
+ */
+
+//Function
+function isMortal(man) {
+  if (typeof(man) === "string") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-let socrates = new Man("Socrates", "grapes");
-let ernesto = new Man("Ernesto", "pizza");
-let men = {
-    mortal: true, 
-    socrates, 
-    ernesto 
-};
-if ((men.mortal === true) && (socrates instanceof Man)) { 
-    socrates.mortal = true; 
-    console.log("All men are mortal.\nSocrates is a man.\nTherefore, socrates is mortal."); 
-}
+//Vars
+const man = "Socrates";
+const mortal = isMortal(man);
+const xtraText = (mortal ? " " : " not ");
 
-//console.log( typeof(socrates));
-//console.log(socrates instanceof Man);
+//Output
+console.log("All men are mortal.\n" + man + " " + "is" + xtraText + "a man.\nTherefore," + " " + man + " " + "is" + xtraText + "mortal.");
 
 console.log("----------------------------");
 
-/** 
-  * Syllogism 2:
-  *  This cake is either vanilla or chocolate.
-  *  This cake is not chocolate.
-  *  Therefore, this cake is vanilla.
-  */
-function Cake() {
-    let flavorId = Math.floor(Math.random() * Math.floor(10)); // output [0...10]
-    this.flavor = (flavorId == 1) ? "chocolate" : "vanilla";  
-    // this.ingredients = ingredients;
+/**
+ * Syllogism 2:
+ *  This cake is either vanilla or chocolate.
+ *  This cake is not chocolate.
+ *  Therefore, this cake is vanilla.
+ */
+
+//Function
+function getFlavor(cakes, isChocolate) {
+  let flavor = cakes[isChocolate ? 0 : 1];
+  return flavor;
 }
 
-console.log("This cake is either vanilla or chocolate."); 
-let randomCake = new Cake(); 
-if (randomCake.flavor != "chocolate") { 
-    console.log("This cake is not chocolate.");
-} else { 
-    console.log("This cake is not vanilla.") 
-} console.log("Therefore, this cake is " + randomCake.flavor + ".");
+//Vars
+const cakes = [
+   "chocolate",
+   "vanilla"
+];
+const chocolate = false;
+const flavor = getFlavor(cakes, chocolate);
+
+//Output
+console.log("This cake is either" + " " + cakes[0] + " " + "or" + " " + cakes[1] + ".");
+console.log("This cake is not" + " " + cakes[+chocolate] + ".");
+console.log("Therefore, this cake is " + flavor + ".");
