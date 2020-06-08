@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex" />
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Assignment 15. The Fetch API.</title>
+    <style>
+      .cat {
+        margin-top: 10px;
+      }
+      .cat h1 {
+        margin-bottom: 0;
+        color: green;
+      }
+      .alert {
+        color: red;
+        font-weight: bold;
+        background-color: #ede8be;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="catContain">
+      <div>
+        <button id="button">Fetch Data</button>
+        <button id="otherButton">Refresh Data</button>
+      </div>
+      <div id="catData"></div>
+      <div><a href="#catContain">Goto Up</a></div>
+    </div>
+    <script>
+      // fetch API
+      // returns a promise
+      const myContainer = document.getElementById("catContain");
+      const myButton = document.getElementById("button");
+      const mySecondButton = document.getElementById("otherButton");
+      const myDiv = document.getElementById("catData");
+
+      myButton.addEventListener("click", getCat);
+      mySecondButton.addEventListener("click", refreshAndGetCat);
+
+      function getCat() {
+        fetch(`https://api.thecatapi.com/v1/images/search`)
+          .then((data) => data.json())
+          .then((cat) => processCat(cat))
+          .catch((err) => setMyDivInfo(`<div class="alert">Sorry, APP couldn't access to the API.</div>`));
+      }
+
+      function refreshAndGetCat() {
+        setMyDivInfo();
+        getCat();
+      }
+
+      function setMyDivInfo(data = "") {
+        myDiv.innerHTML = data;
+      }
+
+      function processCat(catArray) {
+        // console.log(catArray);
+        for (const cat of catArray) {
+          // console.log(cat);
+          populateCat(cat);
+        }
+      }
+
+      function populateCat(catObj) {
+        console.log(catObj);
+        const { id, url, width, heigth } = catObj;
+        const catDiv = `
+        <div class="cat">
+            <h1>${id}</h1>
+            <img src="${url}" width="${width}" heigth="${heigth}" />
+        </div>
+        `;
+        myDiv.insertAdjacentHTML("beforeend", catDiv);
+        setTimeout(() => scrollBottom(), 1000); //To the Page Bottom after 1 sec
+        scrollBottom();//To the Title
+      }
+
+      function scrollBottom(){
+        window.scrollTo(0, document.body.scrollHeight); //scroll-automatically-to-the-bottom-of-the-page
+      }
+    </script>
+  </body>
+</html>
