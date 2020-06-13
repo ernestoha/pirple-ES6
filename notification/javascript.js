@@ -102,7 +102,7 @@ app.getAlarmArrayPos = function(id){
 
 app.deleteAlarm = function (e){
   e.preventDefault();
-  const form = document.forms["delAlarm"];
+  const form = e.path[1];//fix by EHA to get the correct form.
   console.log("Deleting id "+form.id.value);
   for(let x=0; x<app.alarm.length; x++){
     console.log(app.alarm[x].id);
